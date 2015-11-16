@@ -21,7 +21,7 @@ module.exports = function(stream, opt){
 					icon : 'face-angry',
 					message : err.toString()
 				});
-				reject(err);
+				return reject(err);
 			}
 
 			console.log(opt.label + ' finished successfully!');
