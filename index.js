@@ -12,13 +12,20 @@ module.exports = function(stream, opt){
 	})(opt.label || 'The stream');
 
 	return new Promise(function(resolve, reject){
+		growl({
+			title : 'Build running...',
+			message: 'please wait',
+			icon : 'computer',
+			expire : 700
+		});
+
 		endOfStream(stream, function(err){
 			if (err){
 				console.log(opt.label + ' ended with an error.');
 				console.error(err);
 				growl({
-					title : 'bundle error',
-					icon : 'face-angry',
+					title : 'Build Failure.',
+					icon : 'dialog-error',
 					message : err.toString()
 				});
 				return reject(err);
@@ -26,9 +33,10 @@ module.exports = function(stream, opt){
 
 			console.log(opt.label + ' finished successfully!');
 			growl({
-				message : 'build OK',
+				title : 'Build Success.',
+				message: 'great job',
 				icon : 'emblem-default',
-				expire : 2000
+				expire : 700
 			});
 			resolve();
 		});
